@@ -6,7 +6,7 @@ import {
 } from "microsoft-cognitiveservices-speech-sdk";
 import { ComputerVisionClient } from "@azure/cognitiveservices-computervision";
 import { ApiKeyCredentials } from "@azure/ms-rest-js";
-import { ContentModerationClient } from "@azure/cognitiveservices-contentmoderator";
+import { ContentModeratorClient } from "@azure/cognitiveservices-contentmoderator";
 
 // Import existing sketch analysis functionality
 import { analyzeSketch } from "./azure-service";
@@ -31,31 +31,35 @@ const AZURE_CONTENT_MODERATOR_ENDPOINT =
     process.env.AZURE_CONTENT_MODERATOR_ENDPOINT || "";
 
 export class MultimodalProcessor {
-    private openAIClient: AzureOpenAI;
-    private visionClient: ComputerVisionClient;
-    private moderationClient: ContentModerationClient | null = null;
+    private openAIClient: AzureOpenAI | null = null;
+    private visionClient: ComputerVisionClient | null = null;
+    private moderationClient: ContentModeratorClient | null = null;
     private speechConfig: SpeechConfig | null = null;
 
     constructor() {
         // Initialize Azure OpenAI client
-        this.openAIClient = new AzureOpenAI({
-            apiKey: AZURE_OPENAI_KEY,
-            apiVersion: AZURE_OPENAI_API_VERSION,
-            endpoint: AZURE_OPENAI_ENDPOINT,
-        });
+        if (AZURE_OPENAI_KEY && AZURE_OPENAI_ENDPOINT) {
+            this.openAIClient = new AzureOpenAI({
+                apiKey: AZURE_OPENAI_KEY,
+                apiVersion: AZURE_OPENAI_API_VERSION,
+                endpoint: AZURE_OPENAI_ENDPOINT,
+            });
+        }
 
         // Initialize Computer Vision client
-        const visionCredentials = new ApiKeyCredentials({
-            inHeader: { "Ocp-Apim-Subscription-Key": AZURE_VISION_KEY },
-        });
-        this.visionClient = new ComputerVisionClient(
-            visionCredentials,
-            AZURE_VISION_ENDPOINT
-        );
+        if (AZURE_VISION_KEY && AZURE_VISION_ENDPOINT) {
+            const visionCredentials = new ApiKeyCredentials({
+                inHeader: { "Ocp-Apim-Subscription-Key": AZURE_VISION_KEY },
+            });
+            this.visionClient = new ComputerVisionClient(
+                visionCredentials,
+                AZURE_VISION_ENDPOINT
+            );
+        }
 
         // Initialize Content Moderation client if keys are available
         if (AZURE_CONTENT_MODERATOR_KEY && AZURE_CONTENT_MODERATOR_ENDPOINT) {
-            this.moderationClient = new ContentModerationClient(
+            this.moderationClient = new ContentModeratorClient(
                 AZURE_CONTENT_MODERATOR_ENDPOINT,
                 new ApiKeyCredentials({
                     inHeader: {
@@ -158,6 +162,10 @@ export class MultimodalProcessor {
             );
 
             // First, analyze with Computer Vision
+            if (!this.visionClient) {
+                console.warn("Computer Vision client not initialized");
+                return {};
+            }
             const basicResult = await this.visionClient.analyzeImageInStream(
                 Buffer.from(base64Image, "base64"),
                 {
@@ -201,8 +209,7 @@ export class MultimodalProcessor {
         } catch (error) {
             console.error("Error in enhanced photo analysis:", error);
             throw new Error(
-                `Enhanced photo analysis failed: ${
-                    error instanceof Error ? error.message : String(error)
+                `Enhanced photo analysis failed: ${error instanceof Error ? error.message : String(error)
                 }`
             );
         }
@@ -660,7 +667,7 @@ export class MultimodalProcessor {
                 } else if (
                     Math.abs(
                         windowX -
-                            (roomX + room.boundingBox.width * pixelsToMeters)
+                        (roomX + room.boundingBox.width * pixelsToMeters)
                     ) < 0.1
                 ) {
                     // Window is on east wall
@@ -787,6 +794,10 @@ export class MultimodalProcessor {
                 "}";
 
             // Call Azure OpenAI
+            if (!this.openAIClient) {
+                console.warn("Azure OpenAI client not initialized");
+                return { modelData: {}, metadata: {}, rawResponse: "Mock Response: OpenAI keys missing" };
+            }
             const response = await this.openAIClient.chat.completions.create({
                 model: AZURE_OPENAI_DEPLOYMENT,
                 messages: [
@@ -812,8 +823,7 @@ export class MultimodalProcessor {
         } catch (error) {
             console.error("Error combining inputs:", error);
             throw new Error(
-                `GPT-4 processing failed: ${
-                    error instanceof Error ? error.message : String(error)
+                `GPT-4 processing failed: ${error instanceof Error ? error.message : String(error)
                 }`
             );
         }
