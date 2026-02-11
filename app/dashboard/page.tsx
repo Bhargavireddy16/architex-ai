@@ -12,7 +12,7 @@ export default function DashboardPage() {
       description: "10-story commercial space with sustainable design elements",
       status: "In Progress",
       lastUpdated: "2 hours ago",
-      thumbnail: "/placeholder.svg?height=200&width=300",
+      thumbnail: "/modern-office-building.png",
     },
     {
       id: "2",
@@ -20,7 +20,7 @@ export default function DashboardPage() {
       description: "Multi-family housing with integrated green spaces",
       status: "Draft",
       lastUpdated: "Yesterday",
-      thumbnail: "/placeholder.svg?height=200&width=300",
+      thumbnail: "/residential-complex.png",
     },
     {
       id: "3",
@@ -28,7 +28,7 @@ export default function DashboardPage() {
       description: "Mixed-use development with retail and office spaces",
       status: "Complete",
       lastUpdated: "2 days ago",
-      thumbnail: "/placeholder.svg?height=200&width=300",
+      thumbnail: "/urban-retail-center.png",
     },
   ]
 

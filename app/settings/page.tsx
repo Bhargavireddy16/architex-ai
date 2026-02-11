@@ -113,7 +113,7 @@ export default function SettingsPage() {
                             <CardContent className="space-y-4">
                                 <div className="flex items-center gap-4 pb-4">
                                     <Avatar className="h-16 w-16">
-                                        <AvatarImage src="/placeholder.svg?height=40&width=40" />
+                                        <AvatarImage src="/avatar-female-1.png" />
                                         <AvatarFallback>AC</AvatarFallback>
                                     </Avatar>
                                     <Button variant="outline" size="sm">

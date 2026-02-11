@@ -13,10 +13,10 @@ export default function Home() {
           <div className="flex items-center gap-2 text-xs sm:text-sm text-yellow-800 dark:text-yellow-200">
             <AlertTriangle className="h-4 w-4 flex-shrink-0" />
             <p className="flex-1">
-              <strong className="font-semibold">API Keys Required:</strong> This app needs Azure API keys to work. 
-              <a 
-                href="https://github.com/your-username/aidraft#readme" 
-                target="_blank" 
+              <strong className="font-semibold">API Keys Required:</strong> This app needs Azure API keys to work.
+              <a
+                href="https://github.com/your-username/aidraft#readme"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="underline ml-1 hover:text-yellow-950 dark:hover:text-yellow-50"
               >
@@ -52,15 +52,12 @@ export default function Home() {
               </Link>
             </div>
           </div>
-          <div className="relative aspect-video">
-            <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-primary rounded-lg">
-              <div className="absolute inset-0 bg-grid-white/10"></div>
-            </div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-24 h-24 rounded-full bg-background flex items-center justify-center">
-                <Brain className="h-12 w-12 text-primary" />
-              </div>
-            </div>
+          <div className="relative aspect-video rounded-xl overflow-hidden shadow-2xl">
+            <img
+              src="/home_page.png"
+              alt="AI Drafter Dashboard"
+              className="object-cover w-full h-full"
+            />
           </div>
         </div>
       </section>
