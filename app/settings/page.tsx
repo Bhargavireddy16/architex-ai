@@ -26,6 +26,7 @@ import {
     User,
 } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
+import { getAssetPath } from "@/lib/utils";
 
 export default function SettingsPage() {
     const [activeTab, setActiveTab] = useState("account");
@@ -113,7 +114,7 @@ export default function SettingsPage() {
                             <CardContent className="space-y-4">
                                 <div className="flex items-center gap-4 pb-4">
                                     <Avatar className="h-16 w-16">
-                                        <AvatarImage src="/avatar-female-1.png" />
+                                        <AvatarImage src={getAssetPath("/avatar-female-1.png")} />
                                         <AvatarFallback>AC</AvatarFallback>
                                     </Avatar>
                                     <Button variant="outline" size="sm">

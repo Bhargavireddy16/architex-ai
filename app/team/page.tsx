@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { getAssetPath } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -390,7 +391,7 @@ function TeamMemberCard({ member }: { member: any }) {
                     <div className="flex items-start gap-3">
                         <div className="relative">
                             <Avatar className="h-12 w-12">
-                                <AvatarImage src={member.avatar} />
+                                <AvatarImage src={getAssetPath(member.avatar)} />
                                 <AvatarFallback>
                                     {member.name
                                         .split(" ")
@@ -602,7 +603,7 @@ function TeamProjectCard({
                                                         >
                                                             <AvatarImage
                                                                 src={
-                                                                    member?.avatar
+                                                                    member?.avatar ? getAssetPath(member.avatar) : undefined
                                                                 }
                                                                 alt={
                                                                     member?.name

@@ -38,6 +38,7 @@ import {
     Users,
 } from "lucide-react";
 import Link from "next/link";
+import { getAssetPath } from "@/lib/utils";
 
 // Mock project data
 const MOCK_PROJECTS = [
@@ -308,7 +309,7 @@ function ProjectCard({
         <Card className="overflow-hidden flex flex-col h-full">
             <div className="aspect-video relative bg-muted">
                 <img
-                    src={project.thumbnail}
+                    src={getAssetPath(project.thumbnail)}
                     alt={project.title}
                     className="object-cover w-full h-full"
                 />

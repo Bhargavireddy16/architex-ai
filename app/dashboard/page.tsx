@@ -3,6 +3,8 @@ import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/comp
 import { PlusCircle, Clock, ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 
+import { getAssetPath } from "@/lib/utils"
+
 export default function DashboardPage() {
   // Mock projects data
   const projects = [
@@ -68,7 +70,7 @@ function ProjectCard({ project }: { project: any }) {
   return (
     <Card className="overflow-hidden flex flex-col">
       <div className="aspect-video relative bg-muted">
-        <img src={project.thumbnail || "/placeholder.svg"} alt={project.title} className="object-cover w-full h-full" />
+        <img src={getAssetPath(project.thumbnail || "/placeholder.svg")} alt={project.title} className="object-cover w-full h-full" />
         <span className="absolute top-2 right-2 bg-background/80 backdrop-blur-sm text-xs px-2 py-1 rounded-full">
           {project.status}
         </span>

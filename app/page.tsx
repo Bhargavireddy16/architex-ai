@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowRight, Brain, Building, Cpu, LineChart, Users, AlertTriangle } from "lucide-react"
 import Link from "next/link"
+import { getAssetPath } from "@/lib/utils"
 
 export default function Home() {
   return (
@@ -54,7 +55,7 @@ export default function Home() {
           </div>
           <div className="relative aspect-video rounded-xl overflow-hidden shadow-2xl">
             <img
-              src="/home_page.png"
+              src={getAssetPath("/home_page.png")}
               alt="AI Drafter Dashboard"
               className="object-cover w-full h-full"
             />
