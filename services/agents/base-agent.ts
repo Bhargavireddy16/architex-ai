@@ -1,4 +1,4 @@
-import { AzureOpenAI } from "openai";
+import { OpenAI } from "openai";
 import { AZURE_SERVICES_CONFIG } from "./agent-config";
 
 export type AgentInput = {
@@ -10,7 +10,7 @@ export type AgentOutput = {
 };
 
 export abstract class BaseAgent {
-    protected client: AzureOpenAI;
+    protected client: OpenAI;
     protected name: string;
     protected systemPrompt: string;
 
@@ -19,10 +19,8 @@ export abstract class BaseAgent {
         this.systemPrompt = systemPrompt;
 
         // Initialize Azure OpenAI client
-        this.client = new AzureOpenAI({
+        this.client = new OpenAI({
             apiKey: AZURE_SERVICES_CONFIG.openai.key,
-            apiVersion: AZURE_SERVICES_CONFIG.openai.apiVersion,
-            endpoint: AZURE_SERVICES_CONFIG.openai.endpoint,
         });
     }
 
@@ -48,8 +46,7 @@ export abstract class BaseAgent {
         } catch (error) {
             console.error(`Error in ${this.name} agent LLM call:`, error);
             throw new Error(
-                `${this.name} agent failed: ${
-                    error instanceof Error ? error.message : String(error)
+                `${this.name} agent failed: ${error instanceof Error ? error.message : String(error)
                 }`
             );
         }

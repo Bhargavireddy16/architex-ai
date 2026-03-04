@@ -1,4 +1,4 @@
-import { AzureOpenAI } from "openai";
+import { OpenAI } from "openai";
 import { AzureKeyCredential } from "@azure/core-auth";
 import { ComputerVisionClient } from "@azure/cognitiveservices-computervision";
 import { ApiKeyCredentials } from "@azure/ms-rest-js";
@@ -213,10 +213,8 @@ export async function generateModelFromSketch(
 ) {
     try {
         // Initialize Azure OpenAI client
-        const client = new AzureOpenAI({
+        const client = new OpenAI({
             apiKey: AZURE_OPENAI_KEY,
-            apiVersion: AZURE_OPENAI_API_VERSION,
-            endpoint: AZURE_OPENAI_ENDPOINT,
         });
 
         // Prepare system message with the expected output format - enhanced for multiple rooms
@@ -367,10 +365,8 @@ export async function generateModelFromSketch(
 export async function generateThreeJsCode(modelData: any, prompt: string = "") {
     try {
         // Initialize Azure OpenAI client
-        const client = new AzureOpenAI({
+        const client = new OpenAI({
             apiKey: AZURE_OPENAI_KEY,
-            apiVersion: AZURE_OPENAI_API_VERSION,
-            endpoint: AZURE_OPENAI_ENDPOINT,
         });
 
         // Prepare system message with improved sketch focus and support for multiple rooms

@@ -1,4 +1,4 @@
-import { AzureOpenAI } from "openai";
+import { OpenAI } from "openai";
 import {
     SpeechConfig,
     AudioConfig,
@@ -31,18 +31,16 @@ const AZURE_CONTENT_MODERATOR_ENDPOINT =
     process.env.AZURE_CONTENT_MODERATOR_ENDPOINT || "";
 
 export class MultimodalProcessor {
-    private openAIClient: AzureOpenAI | null = null;
+    private openAIClient: OpenAI | null = null;
     private visionClient: ComputerVisionClient | null = null;
     private moderationClient: ContentModeratorClient | null = null;
     private speechConfig: SpeechConfig | null = null;
 
     constructor() {
         // Initialize Azure OpenAI client
-        if (AZURE_OPENAI_KEY && AZURE_OPENAI_ENDPOINT) {
-            this.openAIClient = new AzureOpenAI({
+        if (AZURE_OPENAI_KEY) {
+            this.openAIClient = new OpenAI({
                 apiKey: AZURE_OPENAI_KEY,
-                apiVersion: AZURE_OPENAI_API_VERSION,
-                endpoint: AZURE_OPENAI_ENDPOINT,
             });
         }
 
