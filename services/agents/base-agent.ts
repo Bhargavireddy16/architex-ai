@@ -34,7 +34,7 @@ export abstract class BaseAgent {
     ): Promise<string> {
         try {
             const response = await this.client.chat.completions.create({
-                model: AZURE_SERVICES_CONFIG.openai.deployment,
+                model: AZURE_SERVICES_CONFIG.openai.deployment || "gpt-4",
                 messages: [
                     { role: "system", content: this.systemPrompt },
                     { role: "user", content: prompt },
